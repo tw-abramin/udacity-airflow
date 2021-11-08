@@ -49,7 +49,8 @@ class StageToRedshiftOperator(BaseOperator):
         s3_path = "s3://{}/{}".format(self.s3_bucket, rendered_key)
 
         if self.truncate:
-            redshift_hook.run('TRUNCATE {}'.format(self.table))
+            self.log.info(f"Truncating table: {self.table}")
+            redshift_hook.run('TRUNCATE TABLE {}'.format(self.table))
             
         formatted_sql = StageToRedshiftOperator.copy_sql.format(
             self.table,
@@ -61,6 +62,6 @@ class StageToRedshiftOperator(BaseOperator):
         )
 
 
-        self.log.info('Copying data from S3 to Redshift')
+        self.log.info(f"Copying data from S3 path {s3_path}, to Redshift table: {self.table}")
         redshift_hook.run(formatted_sql)
 
