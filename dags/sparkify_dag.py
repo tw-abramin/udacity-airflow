@@ -94,9 +94,9 @@ run_quality_checks = DataQualityOperator(
     dag=dag,
     tables=['songplays', 'users', 'songs', 'artists', 'time'],
     extra_checks=[{
-        'sql': 'SELECT COUNT(*) FROM artists WHERE artist_id IS NULL',
+        'sql': 'SELECT COUNT(*) FROM artists WHERE artistid IS NULL',
         'expected': 0,
-        'error_message': 'Artists table contains NULL artist_ids'
+        'error_message': 'Artists table contains NULL artistids'
     }]
 )
 
